@@ -38,6 +38,7 @@ jobs:
           --api_key ${{ secrets.LW_API_KEY }} \
           --api_secret ${{ secrets.LW_API_SECRET }}
         lacework component install sca
+        lacework sca version
 
     - name: Run Lacework SCA (SAST + SBOM)
       run: |
