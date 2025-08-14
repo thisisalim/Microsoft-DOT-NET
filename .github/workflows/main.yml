@@ -18,8 +18,8 @@ jobs:
 #     IMAGE_TAG: latest
 #     DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
 #     DOCKER_PASS: ${{ secrets.DOCKER_PASSWORD }}
-      LW_ACCOUNT_NAME: ${{ secrets.LW_ACCOUNT }}
-      LW_ACCESS_TOKEN: ${{ secrets.LW_ACCESS_TOKEN }}
+#     LW_ACCOUNT_NAME: ${{ secrets.LW_ACCOUNT }}
+#    LW_ACCESS_TOKEN: ${{ secrets.LW_ACCESS_TOKEN }}
 #     AWS_REGION: me-central-1
 #     K8S_API_SERVER: "https://BEF9820BF71752233C772AD75865B9F1.gr7.me-central-1.eks.amazonaws.com"
 #     K8S_BEARER_TOKEN: ${{ secrets.K8S_BEARER_TOKEN }}
