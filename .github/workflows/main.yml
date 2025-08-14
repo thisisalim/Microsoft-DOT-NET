@@ -13,7 +13,7 @@ jobs:
   secure-code-scan:
     runs-on: ubuntu-latest
 
-    env:
+#   env:
 #     IMAGE_NAME: hello-app
 #     IMAGE_TAG: latest
 #     DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
