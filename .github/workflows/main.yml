@@ -1,0 +1,45 @@
+name: cicd-block_reg-(Pre-Push)-Policy
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'  # Daily at midnight UTC
+
+permissions:
+  contents: read
+  id-token: write  # Required for OIDC to work with AWS
+
+jobs:
+  secure-code-scan:
+    runs-on: ubuntu-latest
+
+    env:
+#     IMAGE_NAME: hello-app
+#     IMAGE_TAG: latest
+#     DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+#     DOCKER_PASS: ${{ secrets.DOCKER_PASSWORD }}
+      LW_ACCOUNT_NAME: ${{ secrets.LW_ACCOUNT }}
+      LW_ACCESS_TOKEN: ${{ secrets.LW_ACCESS_TOKEN }}
+#     AWS_REGION: me-central-1
+#     K8S_API_SERVER: "https://BEF9820BF71752233C772AD75865B9F1.gr7.me-central-1.eks.amazonaws.com"
+#     K8S_BEARER_TOKEN: ${{ secrets.K8S_BEARER_TOKEN }}
+#     CLUSTER_CA_B64: ${{ secrets.CLUSTER_CA_B64 }}
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Install and Configure Lacework CLI
+      run: |
+        curl https://raw.githubusercontent.com/lacework/go-sdk/main/cli/install.sh | bash
+        lacework configure \
+          --noninteractive \
+          --account ${{ secrets.LW_ACCOUNT }} \
+          --api_key ${{ secrets.LW_API_KEY }} \
+          --api_secret ${{ secrets.LW_API_SECRET }}
+        lacework component install sca
+
+    - name: Run Lacework SCA (SAST + SBOM)
+      run: |
+        mkdir -p lacework-reports
+        lacework sca scan ./ -f sarif -o lacework-reports/scan.sarif.json --save-results
